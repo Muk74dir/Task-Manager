@@ -16,8 +16,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-LOGIN_REDIRECT_URL = '/show_tasks/'
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',

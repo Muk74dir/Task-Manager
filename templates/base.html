@@ -18,8 +18,13 @@
             <div class="navbar-nav ml-auto">
                 <a class="nav-link text-white" href="{% url "add_task" %}">Add Task</a>
                 <a class="nav-link text-white" href="{% url "show_tasks" %}">Show Tasks</a>
+                {% if user.is_authenticated %}
                 <a class="nav-link text-white" href="#">Profile</a>
-                <a class="nav-link text-white" href="{% url "loginpage" %}">Login</a>
+                  <a class="nav-link text-white" href="{% url "logoutpage" %}">Logout</a>
+                {% else %}
+                <a class="nav-link text-white" href="{% url "registerpage" %}">Register</a>
+                  <a class="nav-link text-white" href="{% url "loginpage" %}">Login</a>
+                {% endif %}
             </div>
         </div>
     </div>

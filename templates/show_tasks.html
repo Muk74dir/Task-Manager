@@ -17,18 +17,13 @@
             <tbody style="text-align:center;">
               {% for task in tasks %}
               <tr>
-                <td scope="row"> {{task.taskTitle}} </th>
-                <td scope="row"> {{task.taskDescription}} </th>
+                <td scope="row"> {{task.title}} </th>
+                <td scope="row"> {{task.description}} </th>
                 {% if task.is_completed %}
                 <td scope="row"> Completed </th>  
                 {% else %}
                 <td scope="row"> Incomplete </th>
                 {% endif %}
-                <td>
-                  <a class="btn btn-warning btn-sm" href=" {% url 'edit_task' task.id %} ">Edit</a>
-                  <a class="btn btn-danger btn-sm" href=" {% url 'delete_task' task.id %} " > Delete </a>
-                  <a class="btn btn-success btn-sm" href="{% url 'complete' task.id %}"  > Complete </a>
-                </td>
               </tr>
               {% endfor %}
               </tbody>
