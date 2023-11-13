@@ -1,7 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 from .constants import PRIORITY, STATUS
 
 class TaskModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     description = models.TextField()
     due_date = models.DateField()
