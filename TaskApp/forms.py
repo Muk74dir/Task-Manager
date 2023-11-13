@@ -15,5 +15,5 @@ class LoginForm(forms.Form):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = TaskModel
-        fields = ['title', 'description', 'due_date', 'status', 'photos', 'priority', 'created_at', 'updated_at']
+        fields = ['title', 'description', 'due_date', 'status', 'photos', 'priority']
         
