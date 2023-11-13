@@ -2,13 +2,16 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div style="width: 50%; margin: auto;">
-    <h1 class="m-4">Add Your Task Here</h1>
-    <form method="POST">
+    <h1 class="m-4 text-center">Add Your Task Here</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="p-5 bg-black text-white">
         {% csrf_token %}
         {{form|crispy}}
+        </div>
         <button class="btn btn-success m-4" type="submit">Submit</button>
     </form>
 </div>
 {% endblock content %}
+
 
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Task Manager</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static "css/style.css" %}">
 </head>
@@ -16,11 +16,10 @@
               <a class="navbar-brand text-white" href="{% url 'homepage' %}">Task Manager</a>
             </div>
             <div class="navbar-nav ml-auto">
-                <a class="nav-link text-white" href="#">Add Task</a>
-                <a class="nav-link text-white" href="#">Completed Tasks</a>
-                <a class="nav-link text-white" href="#">Incompleted Tasks</a>
+                <a class="nav-link text-white" href="{% url "add_task" %}">Add Task</a>
+                <a class="nav-link text-white" href="{% url "show_tasks" %}">Show Tasks</a>
                 <a class="nav-link text-white" href="#">Profile</a>
-                <a class="nav-link text-white" href="#">Login</a>
+                <a class="nav-link text-white" href="{% url "loginpage" %}">Login</a>
             </div>
         </div>
     </div>

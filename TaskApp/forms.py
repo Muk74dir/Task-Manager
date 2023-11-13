@@ -7,13 +7,10 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
-        
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=150)
-    password = forms.CharField(widget=forms.PasswordInput)
     
 class TaskForm(forms.ModelForm):
+    due_date = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
     class Meta:
         model = TaskModel
-        fields = ['title', 'description', 'due_date', 'status', 'photos', 'priority']
+        fields = ['title', 'description', 'due_date', 'photos', 'priority']
         
