@@ -39,7 +39,7 @@ class AddTaskView(BaseLoginRequiredMixin, CreateView):
     model = TaskModel
     form_class = TaskForm
     template_name = 'add_task.html'
-    success_url = 'add_tasks'
+    success_url = '/show_tasks/'
     
     def form_valid(self, form):
         form.instance.user = self.request.user

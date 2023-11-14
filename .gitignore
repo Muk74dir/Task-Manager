@@ -4,3 +4,4 @@ venv
 *.py[cod]
 *__init__.py
 *.jpg
+*.png
