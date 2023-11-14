@@ -8,5 +8,6 @@ urlpatterns = [
     path('login/', LogInView.as_view(), name='loginpage'),
     path('logout/', LogOutView.as_view(), name='logoutpage'),
     path('signup/', RegistrationView.as_view(), name='signuppage'),
+    path('edit_task/<int:id>/', EditTaskView.as_view(), name='edit_task'),
     
 ]

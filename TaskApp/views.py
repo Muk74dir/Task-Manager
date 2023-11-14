@@ -58,6 +58,15 @@ class LogOutView(LogoutView):
         logout(request)
         return redirect('loginpage')
     
+# Edit Task View
+class EditTaskView(BaseLoginRequiredMixin, View):
+    template_name = 'edit_task'
+    
+    def get(self, request, id):
+        task = TaskModel.objects.get(id=id)
+        form = TaskForm(instance=task)
+        return render(request, "edit_task.html", {'form':form})
+    
             
 
 

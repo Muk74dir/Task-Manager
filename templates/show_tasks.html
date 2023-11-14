@@ -35,7 +35,7 @@
                 <td scope="row"> {{task.created_at}} </td>
                 <td scope="row"> {{task.updated_at}} </td>
                 <td scope="row">
-                  <a class="btn btn-warning btn-sm" href="">Edit</a>
+                  <a class="btn btn-warning btn-sm" href=" {% url 'edit_task' task.id %} ">Edit</a>
                   <a class="btn btn-success btn-sm" href="">Complete</a>
                   <a class="btn btn-danger btn-sm" href="">Delete</a>
                 </td>
