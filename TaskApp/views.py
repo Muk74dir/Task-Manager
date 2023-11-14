@@ -49,7 +49,7 @@ class AddTaskView(BaseLoginRequiredMixin, CreateView):
 class RegistrationView(CreateView):
     form_class = RegistrationForm
     template_name = 'signup.html'
-    success_url = 'loginpage'
+    success_url = '/login/'
     
     
 # Logout View
