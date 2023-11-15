@@ -31,3 +31,22 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = TaskModel
         fields = ['title', 'description', 'due_date', 'photos', 'priority']
+        
+        
+class MixedTaskPhotoForm(forms.ModelForm):
+    due_date = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
+    photos = MultipleFileField()
+    class Meta:
+        model = TaskModel
+        fields = ['title', 'description', 'due_date', 'photos', 'priority', 'image']
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['image'].required = False
+    
+    def save(self, commit=True):
+        task = super().save(commit=False)
+        task.image = self.cleaned_data['image']
+        if commit:
+            task.save()
+        return task

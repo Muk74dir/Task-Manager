@@ -3,7 +3,7 @@ from django.views.generic import CreateView, View, FormView
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import RegistrationForm, TaskForm
+from .forms import RegistrationForm, TaskForm, MixedTaskPhotoForm
 from .models import TaskModel, PhotoModel
 
 
@@ -49,9 +49,6 @@ class AddTaskView(BaseLoginRequiredMixin, CreateView):
             PhotoModel.objects.create(task=tasks, image=f)
         return super().form_valid(form)
     
-                
-    
-    
 class RegistrationView(CreateView):
     form_class = RegistrationForm
     template_name = 'signup.html'
@@ -65,22 +62,26 @@ class LogOutView(LogoutView):
         return redirect('loginpage')
     
 # Edit Task View
-class EditTaskView(BaseLoginRequiredMixin, View):
+class EditTaskView(BaseLoginRequiredMixin, CreateView):
     template_name = 'edit_task.html'
     
     def get(self, request, id):
         task = TaskModel.objects.get(id=id)
-        form = TaskForm(instance=task)
-        return render(request, "edit_task.html", {'form':form})
+        form = MixedTaskPhotoForm(instance=task)
+        return render(request, self.template_name, {'form':form})
     
     def post(self, request, id):
         task = TaskModel.objects.get(id=id)
-        form = TaskForm(request.POST, instance=task)
+        form = MixedTaskPhotoForm(request.POST, request.FILES, instance=task)
         if form.is_valid():
             form.save()
             return redirect('show_tasks')
         else:
-            return render(request, "edit_task.html", {'form':form})
+            return render(request, self.template_name, {'form':form})
+        
+    
+    
+    
 
 # Complete Task View
 class CompleteTaskView(BaseLoginRequiredMixin, View):
