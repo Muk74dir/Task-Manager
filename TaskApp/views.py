@@ -60,13 +60,71 @@ class LogOutView(LogoutView):
     
 # Edit Task View
 class EditTaskView(BaseLoginRequiredMixin, View):
-    template_name = 'edit_task'
+    template_name = 'edit_task.html'
     
     def get(self, request, id):
         task = TaskModel.objects.get(id=id)
         form = TaskForm(instance=task)
         return render(request, "edit_task.html", {'form':form})
     
+    def post(self, request, id):
+        task = TaskModel.objects.get(id=id)
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('show_tasks')
+        else:
+            return render(request, "edit_task.html", {'form':form})
+
+# Complete Task View
+class CompleteTaskView(BaseLoginRequiredMixin, View):
+    def get(self, request, id):
+        task = TaskModel.objects.get(id=id)
+        task.is_completed = True
+        task.save()
+        return redirect('show_tasks') 
+
+# InComplete Task View
+class InCompleteTaskView(BaseLoginRequiredMixin, View):
+    def get(self, request, id):
+        task = TaskModel.objects.get(id=id)
+        task.is_completed = False
+        task.save()
+        return redirect('show_tasks')
+        
+        
+# Delete Task View
+class DeleteTaskView(BaseLoginRequiredMixin, View):
+    def get(self, request, id):
+        task = TaskModel.objects.get(id=id)
+        task.delete()
+        return redirect('show_tasks')
+    
+# Details View
+class DetailsView(BaseLoginRequiredMixin, View):
+    template_name = 'details_view.html'
+    
+    def get(self, request, id):
+        task = TaskModel.objects.get(id=id)
+        return render(request, self.template_name, {'task':task})    
+    
+
+# Profile View
+class ProfileView(BaseLoginRequiredMixin, View):
+    template_name = 'profile.html'
+    def get(self, request):
+        context = {}
+        context['user'] = request.user
+        context['email'] = request.user.email
+        context['first_name'] = request.user.first_name
+        context['last_name'] = request.user.last_name
+        return render(request, self.template_name, context)
+    
+# Change Password View
+class ChangePasswordView(BaseLoginRequiredMixin, PasswordChangeView):
+    template_name = 'change_password.html'
+    success_url = '/profile/'
             
+
 
 

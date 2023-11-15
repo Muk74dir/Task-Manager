@@ -17,6 +17,7 @@
                 <th scope="col">Created at</th>
                 <th scope="col">Updated at</th>
                 <th scope="col">Action</th>
+                <th scope="col">View</th>
               </tr>
             </thead>
             <tbody style="text-align:center;">
@@ -26,7 +27,7 @@
                 <td scope="row"> {{task.title}} </td>
                 <td scope="row"> {{task.description}} </td>
                 <td scope="row"> {{task.due_date}} </td>
-                {% if task.status  %}
+                {% if task.is_completed  %}
                 <td scope="row"> Completed </td>  
                 {% else %}
                 <td scope="row"> Incomplete </td>
@@ -35,9 +36,16 @@
                 <td scope="row"> {{task.created_at}} </td>
                 <td scope="row"> {{task.updated_at}} </td>
                 <td scope="row">
-                  <a class="btn btn-warning btn-sm" href=" {% url 'edit_task' task.id %} ">Edit</a>
-                  <a class="btn btn-success btn-sm" href="">Complete</a>
-                  <a class="btn btn-danger btn-sm" href="">Delete</a>
+                  <a class="btn btn-warning btn-sm" href=" {% url 'edit_task' task.id %} "> Edit </a>
+                  {% if task.is_completed  %}
+                  <a class="btn btn-success btn-sm" href="{% url 'incomplete_task' task.id %}"> Incomplete </a>
+                  {% else %}
+                  <a class="btn btn-success btn-sm" href="{% url 'complete_task' task.id %}"> Complete </a>
+                  {% endif %}
+                  <a class="btn btn-danger btn-sm" href="{% url 'delete_task' task.id %}"> Delete </a>
+                </td>
+                <td scope="row">
+                  <a class="btn btn-primary btn-sm" href="{% url 'details_view' task.id %}"> Details </a>
                 </td>
               </tr>
               {% endfor %}

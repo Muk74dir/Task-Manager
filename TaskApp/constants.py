@@ -3,8 +3,3 @@ PRIORITY = (
     ('2', 'Medium'),
     ('3', 'High')
 )
-
-STATUS = (
-    ('incomplete', 'Incomplete'),
-    ('complete', 'Complete')
-)

@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
-from .constants import PRIORITY, STATUS
+from .constants import PRIORITY
 
 class TaskModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     description = models.TextField()
     due_date = models.DateField()
-    status = models.CharField(choices=STATUS)
+    is_completed = models.BooleanField(default=False)
     photos = models.ImageField(upload_to='images/')
     priority = models.CharField(choices=PRIORITY)
     created_at = models.DateTimeField(auto_now_add=True)

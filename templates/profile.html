@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Hello {{user}}</h1>
+    <p> Welcome to profile page</p>
+    <h4>Info</h4>
+    <p>Username: {{user}}</p>
+    <p>Email: {{email}}</p>
+    <p>First Name: {{first_name}}</p>
+    <p>Last Name: {{last_name}}</p>
+
+    <a class="btn btn-warning btn-sm" href=" {% url "chanagepass" %} "> Change Password </a>
+{% endblock %}
