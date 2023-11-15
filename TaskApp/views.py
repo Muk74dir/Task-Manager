@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, View
+from django.views.generic import CreateView, View, FormView
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import RegistrationForm, TaskForm
-from .models import TaskModel
+from .models import TaskModel, PhotoModel
 
 
 class BaseLoginRequiredMixin(LoginRequiredMixin, View):
@@ -25,25 +25,36 @@ class LogInView(LoginView):
             return render(rquest, self.template_name, {'Error': 'Invalid Username or Password'})
      
 # TaskList View
-class TaskListView(BaseLoginRequiredMixin):
+class TaskListView(BaseLoginRequiredMixin, View):
     template_name = 'show_tasks.html'
     success_url = '/show_tasks/'
 
     def get(self, request):
         tasks = TaskModel.objects.filter(user=request.user)
-        context = {'tasks':tasks}    
+        photos = PhotoModel.objects.filter(task__in=tasks)
+        for task in tasks:
+            task.image = photos.filter(task=task)[0].image
+            task.save()
+        for task in tasks:
+            print(task.image)
+        context = {'tasks':tasks}
         return render(request, self.template_name, context)      
         
 # Add Task View
 class AddTaskView(BaseLoginRequiredMixin, CreateView):
-    model = TaskModel
-    form_class = TaskForm
     template_name = 'add_task.html'
+    form_class = TaskForm
     success_url = '/show_tasks/'
-    
+
     def form_valid(self, form):
         form.instance.user = self.request.user
+        fils = self.request.FILES.getlist('photos')
+        tasks = form.save()
+        for f in fils:
+            PhotoModel.objects.create(task=tasks, images=f)
         return super().form_valid(form)
+    
+                
     
     
 class RegistrationView(CreateView):

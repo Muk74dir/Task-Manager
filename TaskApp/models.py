@@ -8,10 +8,19 @@ class TaskModel(models.Model):
     description = models.TextField()
     due_date = models.DateField()
     is_completed = models.BooleanField(default=False)
-    photos = models.ImageField(upload_to='images/')
     priority = models.CharField(choices=PRIORITY)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    image = models.ImageField()
+    
     def __str__(self):
         return f"{self.title}"
+    
+    
+class PhotoModel(models.Model):
+    task = models.ForeignKey(TaskModel, on_delete=models.CASCADE, related_name='tasks')
+    images = models.ImageField(upload_to='images/')
+    
+    def __str__(self):
+        return f"{self.task.title}"
+

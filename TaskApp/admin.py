@@ -3,7 +3,7 @@ from .models import TaskModel
 
 @admin.register(TaskModel)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['title', 'description', 'due_date', 'is_completed', 'photos', 'priority', 'created_at', 'updated_at']
+    list_display = ['title', 'description', 'due_date', 'is_completed', 'priority', 'created_at', 'updated_at']
     ordering = ['-priority']
     
     def __str__(self):
