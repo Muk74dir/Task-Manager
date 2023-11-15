@@ -30,14 +30,9 @@ class TaskListView(BaseLoginRequiredMixin, View):
     success_url = '/show_tasks/'
 
     def get(self, request):
+        context = {}
         tasks = TaskModel.objects.filter(user=request.user)
-        photos = PhotoModel.objects.filter(task__in=tasks)
-        for task in tasks:
-            task.image = photos.filter(task=task)[0].image
-            task.save()
-        for task in tasks:
-            print(task.image)
-        context = {'tasks':tasks}
+        context['tasks'] = tasks
         return render(request, self.template_name, context)      
         
 # Add Task View
@@ -51,7 +46,7 @@ class AddTaskView(BaseLoginRequiredMixin, CreateView):
         fils = self.request.FILES.getlist('photos')
         tasks = form.save()
         for f in fils:
-            PhotoModel.objects.create(task=tasks, images=f)
+            PhotoModel.objects.create(task=tasks, image=f)
         return super().form_valid(form)
     
                 

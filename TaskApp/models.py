@@ -11,7 +11,7 @@ class TaskModel(models.Model):
     priority = models.CharField(choices=PRIORITY)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='images/')
     
     def __str__(self):
         return f"{self.title}"
@@ -19,7 +19,7 @@ class TaskModel(models.Model):
     
 class PhotoModel(models.Model):
     task = models.ForeignKey(TaskModel, on_delete=models.CASCADE, related_name='tasks')
-    images = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/')
     
     def __str__(self):
         return f"{self.task.title}"

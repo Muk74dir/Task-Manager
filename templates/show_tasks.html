@@ -23,7 +23,7 @@
             <tbody style="text-align:center;">
               {% for task in tasks %}
               <tr>
-                <td scope="row"><img src="{{ task.image.url }}" alt="{{ task.title }}" style="width: 100px;" ></td>
+                <td scope="row"><img src="{{ task.tasks.first.image.url }}" alt="{{ task.title }}" style="width: 100px;" ></td>
                 <td scope="row"> {{task.title}} </td>
                 <td scope="row"> {{task.description}} </td>
                 <td scope="row"> {{task.due_date}} </td>
