@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import RegistrationForm, TaskForm, MixedTaskPhotoForm, TaskSearchForm, TaskFilterForm
 from .models import TaskModel, PhotoModel
+from django.urls import reverse_lazy
 
 
 class BaseLoginRequiredMixin(LoginRequiredMixin, View):
@@ -80,7 +81,7 @@ class AddTaskView(BaseLoginRequiredMixin, CreateView):
 class RegistrationView(CreateView):
     form_class = RegistrationForm
     template_name = 'signup.html'
-    success_url = '/login/'
+    success_url = reverse_lazy('loginpage')
     
     
 # Logout View

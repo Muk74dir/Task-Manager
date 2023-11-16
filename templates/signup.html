@@ -13,14 +13,28 @@
             {% if form.username.errors %}{% for error in form.username.errors %} 
             <p class="text-danger">* {{ error }}</p> 
             {% endfor %}{% endif %}
-        </div>
+          </div>
+          <div class="col form-group mb-2">
+            <label for="first_name"><b>First Name</b></label>
+            <input type="text" class="form-control" id="username" placeholder="Enter your first name" name='first_name'>
+            {% if form.username.errors %}{% for error in form.username.errors %} 
+            <p class="text-danger">* {{ error }}</p> 
+            {% endfor %}{% endif %}
+          </div>
+          <div class="col form-group mb-2">
+            <label for="last_name"><b>Last Name</b></label>
+            <input type="text" class="form-control" id="username" placeholder="Enter your last name" name='last_name'>
+            {% if form.username.errors %}{% for error in form.username.errors %} 
+            <p class="text-danger">* {{ error }}</p> 
+            {% endfor %}{% endif %}
+          </div>
           
 
         <div class="form-group mt-2">
             <label for="email"><b>Email</b></label>
             <input type="email" class="form-control" id="email" placeholder="Enter your email" name='email'>
             {% if form.email.errors %}{% for error in form.email.errors %}<p class="text-danger">* {{ error }}</p> 
-        {% endfor %}{% endif %}
+            {% endfor %}{% endif %}
         </div>
 
         <div class="form-row">
@@ -44,14 +58,10 @@
         <div class="form-group my-3 text-center">
           <button type="submit" class="btn btn-primary btn-block">Signup</button>
         </div>
-        <!-- form-group// -->
       </form>
     </article>
-    <!-- card-body.// -->
   </div>
-  <!-- card .// -->
   <p class="text-center mt-4">Already have an account? <a decoration="None" href="{% url "loginpage" %}" >Log In</a></p>
   <br /><br />
-  <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
 </section>
 {% endblock content %}

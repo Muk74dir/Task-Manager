@@ -5,9 +5,11 @@ from .models import TaskModel
 from .constants import FILTER_CHOICES
 
 class RegistrationForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30, required=False, help_text='First Name')
+    last_name = forms.CharField(max_length=150, required=False, help_text='Last Name')
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
 
 
 class MultipleFileInput(forms.ClearableFileInput):
