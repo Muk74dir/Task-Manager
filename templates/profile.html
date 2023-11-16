@@ -1,12 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-    <h1>Hello {{user}}</h1>
-    <p> Welcome to profile page</p>
-    <h4>Info</h4>
+<div class="container mt-5 bg-dark text-white p-5 col-5">
+    <h1 class="text-center">Hello {{user}}</h1>
+    <h5  class="text-center" > Welcome to profile page</h5>
+    <h4 class="text-center mt-4"><u>Info</u></h4>
     <p>Username: {{user}}</p>
     <p>Email: {{email}}</p>
     <p>First Name: {{first_name}}</p>
     <p>Last Name: {{last_name}}</p>
-
-    <a class="btn btn-warning btn-sm" href=" {% url "chanagepass" %} "> Change Password </a>
+    <p class="text-center"><a class="mt-5 btn btn-warning btn-sm " href=" {% url "chanagepass" %} "> Change Password </a></p>
+</div>
 {% endblock %}

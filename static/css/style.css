@@ -14,3 +14,13 @@
     text-decoration: none;
     text-transform: uppercase;
 }
+
+
+#footer {
+    margin-top: 5rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+
