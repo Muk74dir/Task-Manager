@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from .models import TaskModel
+from .constants import FILTER_CHOICES
 
 class RegistrationForm(UserCreationForm):
     class Meta:
@@ -50,3 +51,12 @@ class MixedTaskPhotoForm(forms.ModelForm):
         if commit:
             task.save()
         return task
+    
+    
+    
+class TaskSearchForm(forms.Form):
+    search = forms.CharField(label='Search', required=False)
+    
+    
+class TaskFilterForm(forms.Form):
+    filter_option = forms.ChoiceField(choices=FILTER_CHOICES, required=False)

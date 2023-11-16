@@ -3,7 +3,7 @@ from django.views.generic import CreateView, View, FormView
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import RegistrationForm, TaskForm, MixedTaskPhotoForm
+from .forms import RegistrationForm, TaskForm, MixedTaskPhotoForm, TaskSearchForm, TaskFilterForm
 from .models import TaskModel, PhotoModel
 
 
@@ -25,15 +25,41 @@ class LogInView(LoginView):
             return render(rquest, self.template_name, {'Error': 'Invalid Username or Password'})
      
 # TaskList View
-class TaskListView(BaseLoginRequiredMixin, View):
+class TaskListView(BaseLoginRequiredMixin, CreateView):
     template_name = 'show_tasks.html'
     success_url = '/show_tasks/'
+    form_class = TaskFilterForm
 
     def get(self, request):
         context = {}
         tasks = TaskModel.objects.filter(user=request.user)
         context['tasks'] = tasks
-        return render(request, self.template_name, context)      
+        form = TaskFilterForm(request.GET)
+        tasks = TaskModel.objects.filter(user=request.user)
+        if form.is_valid():
+            filter_option = form.cleaned_data['filter_option']
+            if filter_option == 'creation_date':
+                tasks = tasks.order_by('created_at')
+            elif filter_option == 'due_date':
+                tasks = tasks.order_by('due_date')
+            elif filter_option == 'priority':
+                tasks = tasks.order_by('priority')
+            elif filter_option == 'updated_at':
+                tasks = tasks.order_by('updated_at')
+            context['tasks'] = tasks
+        context['form'] = form  
+        return render(request, self.template_name, context)    
+    
+    def post(self, request):
+        form = TaskSearchForm(request.POST)
+        if form.is_valid():
+            search = form.cleaned_data['search']
+            tasks = TaskModel.objects.filter(title__icontains=search, user=request.user)
+            context = {}
+            context['tasks'] = tasks
+            return render(request, self.template_name, context)
+        else:
+            return render(request, self.template_name, {'form':form})
         
 # Add Task View
 class AddTaskView(BaseLoginRequiredMixin, CreateView):
@@ -103,6 +129,10 @@ class InCompleteTaskView(BaseLoginRequiredMixin, View):
 # Delete Task View
 class DeleteTaskView(BaseLoginRequiredMixin, View):
     def get(self, request, id):
+        task = TaskModel.objects.get(id=id)
+        return render(request, 'delete_task.html', {'task':task})
+    
+    def post(self, request, id):
         task = TaskModel.objects.get(id=id)
         task.delete()
         return redirect('show_tasks')

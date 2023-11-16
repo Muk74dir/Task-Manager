@@ -1,5 +1,12 @@
 PRIORITY = (
-    ('1', 'Low'),
+    ('3', 'Low'),
     ('2', 'Medium'),
-    ('3', 'High')
+    ('1', 'High')
 )
+
+FILTER_CHOICES = [
+        ('creation_date', 'Creation Date'),
+        ('due_date', 'Due Date'),
+        ('priority', 'Priority'),
+        ('updated_at', 'Updated Date'),
+    ]
