@@ -34,10 +34,10 @@ class TaskListView(BaseLoginRequiredMixin, CreateView):
         context = {}
         tasks = TaskModel.objects.filter(user=request.user)
         context['tasks'] = tasks
-        form = TaskFilterForm(request.GET)
+        filter_form = TaskFilterForm(request.GET)
         tasks = TaskModel.objects.filter(user=request.user)
-        if form.is_valid():
-            filter_option = form.cleaned_data['filter_option']
+        if filter_form.is_valid():
+            filter_option = filter_form.cleaned_data['filter_option']
             if filter_option == 'creation_date':
                 tasks = tasks.order_by('created_at')
             elif filter_option == 'due_date':
@@ -47,15 +47,17 @@ class TaskListView(BaseLoginRequiredMixin, CreateView):
             elif filter_option == 'updated_at':
                 tasks = tasks.order_by('updated_at')
             context['tasks'] = tasks
-        context['form'] = form  
+        context['filter_form'] = filter_form  
         return render(request, self.template_name, context)    
     
     def post(self, request):
+        context = {}
         form = TaskSearchForm(request.POST)
+        filter_form = TaskFilterForm(request.GET)
+        context['filter_form'] = filter_form
         if form.is_valid():
             search = form.cleaned_data['search']
             tasks = TaskModel.objects.filter(title__icontains=search, user=request.user)
-            context = {}
             context['tasks'] = tasks
             return render(request, self.template_name, context)
         else:
@@ -142,8 +144,12 @@ class DetailsView(BaseLoginRequiredMixin, View):
     template_name = 'details_view.html'
     
     def get(self, request, id):
+        context = {}
         task = TaskModel.objects.get(id=id)
-        return render(request, self.template_name, {'task':task})    
+        photos = PhotoModel.objects.filter(task=task)  
+        context['task'] = task
+        context['photos'] = photos
+        return render(request, self.template_name, context)
     
 
 # Profile View

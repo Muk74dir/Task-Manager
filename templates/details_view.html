@@ -1,8 +1,27 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div style="text-align: center;" class='mt-5 text-success bg-light'>
-    <h1>Details View</h1>
-<div>
-{% lorem 40 w random %}
+<section class="bg-success">
+    <div style="text-align: center;" class='my-5 bg-light'>
+        <h1 class="text-danger">Details View</h1>
+    <div>
+    <div>
+        {% for img in photos  %}
+        <img src="{{img.image.url}}" alt="image" width="auto" height="100">
+        {% endfor %}
+
+    </div>
+    <div class='my-5'>
+        <h2 class="my-5">Task Title : {{task.title}} </h2>
+        <h4>Task Description : {{task.description}} </h4>
+        <h4>Task Status : {{task.priority}} </h4>
+        <h4>Task Created : {{task.created_at}} </h4>
+        <h4>Last Updated : {{task.updated_at}} </h4>
+        <h4>Task Due Date : {{task.due_date}} </h4>
+        <h4>Task Completed : {{task.is_completed}} </h4>
+    </div>
+    <div class="my-5">
+        <h5 class="text-success">Assigned To : {{request.user}} </h5>
+    </div>
+</section>
 {% endblock content %}
